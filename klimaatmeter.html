@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Klimaatmeter Klas</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Exo+2:wght@300;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e14;
+    --panel: #0f1520;
+    --border: #1e3a5f;
+    --accent: #00d4ff;
+    --accent2: #00ff9f;
+    --accent3: #ff6b35;
+    --text: #c8d8e8;
+    --dim: #4a6a8a;
+    --glow: 0 0 20px rgba(0,212,255,0.3);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Exo 2', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* scanline overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.08) 2px,
+      rgba(0,0,0,0.08) 4px
+    );
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  /* ===== CONNECT SCREEN ===== */
+  #connect-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    gap: 32px;
+    padding: 40px;
+  }
+
+  .connect-title {
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 800;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+  }
+
+  .connect-subtitle {
+    font-family: 'Share Tech Mono', monospace;
+    color: var(--dim);
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-align: center;
+  }
+
+  .bt-icon {
+    width: 100px;
+    height: 100px;
+    border: 2px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    position: relative;
+    animation: pulse-ring 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-ring {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(0,212,255,0.4), 0 0 0 0 rgba(0,212,255,0.2); }
+    50% { box-shadow: 0 0 0 20px rgba(0,212,255,0), 0 0 0 40px rgba(0,212,255,0); }
+  }
+
+  .connect-btn {
+    padding: 16px 48px;
+    background: transparent;
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    font-family: 'Exo 2', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .connect-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--accent);
+    transform: translateX(-100%);
+    transition: transform 0.3s;
+    z-index: -1;
+  }
+
+  .connect-btn:hover { color: var(--bg); }
+  .connect-btn:hover::before { transform: translateX(0); }
+
+  .connect-btn:disabled {
+    border-color: var(--dim);
+    color: var(--dim);
+    cursor: not-allowed;
+  }
+  .connect-btn:disabled::before { display: none; }
+
+  #bt-status {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 13px;
+    color: var(--dim);
+    letter-spacing: 1px;
+    min-height: 20px;
+    text-align: center;
+  }
+
+  #bt-status.ok { color: var(--accent2); }
+  #bt-status.err { color: var(--accent3); }
+
+  /* ===== DASHBOARD ===== */
+  #dashboard {
+    display: none;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 20px;
+    gap: 20px;
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+
+  .header-title {
+    font-size: clamp(16px, 2.5vw, 24px);
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .status-dot {
+    width: 10px;
+    height: 10px;
+    background: var(--accent2);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--accent2);
+    animation: blink 2s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .status-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    color: var(--accent2);
+    letter-spacing: 1px;
+  }
+
+  .disconnect-btn {
+    padding: 8px 16px;
+    background: transparent;
+    border: 1px solid var(--accent3);
+    color: var(--accent3);
+    font-family: 'Exo 2', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+  .disconnect-btn:hover { background: var(--accent3); color: var(--bg); }
+
+  /* ===== CARDS ===== */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+  }
+
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+
+  .card.temp::before { background: linear-gradient(90deg, transparent, #ff6b35, transparent); }
+  .card.hum::before  { background: linear-gradient(90deg, transparent, #00d4ff, transparent); }
+  .card.co2::before  { background: linear-gradient(90deg, transparent, #00ff9f, transparent); }
+  .card.tvoc::before { background: linear-gradient(90deg, transparent, #bf5fff, transparent); }
+
+  .card-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--dim);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .card-value {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 400;
+    line-height: 1;
+  }
+
+  .card.temp .card-value { color: var(--accent3); text-shadow: 0 0 20px rgba(255,107,53,0.5); }
+  .card.hum  .card-value { color: var(--accent);  text-shadow: 0 0 20px rgba(0,212,255,0.5); }
+  .card.co2  .card-value { color: var(--accent2); text-shadow: 0 0 20px rgba(0,255,159,0.5); }
+  .card.tvoc .card-value { color: #bf5fff; text-shadow: 0 0 20px rgba(191,95,255,0.5); }
+
+  .card-unit {
+    font-size: 14px;
+    opacity: 0.6;
+    margin-left: 4px;
+  }
+
+  .card-status {
+    margin-top: 10px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+
+  /* ===== CHARTS ===== */
+  .charts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    flex: 1;
+  }
+
+  .chart-box {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    min-height: 220px;
+  }
+
+  .chart-title {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--dim);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .chart-box canvas { height: 180px !important; }
+
+  /* ===== RAW DATA LOG ===== */
+  .log-box {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+  }
+
+  .log-title {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--dim);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  #raw-log {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    color: var(--accent2);
+    height: 80px;
+    overflow-y: auto;
+    line-height: 1.8;
+  }
+
+  #raw-log div { opacity: 0; animation: fadein 0.4s forwards; }
+  @keyframes fadein { to { opacity: 1; } }
+
+  .melding {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: var(--dim);
+    text-align: center;
+    padding: 8px;
+    letter-spacing: 1px;
+  }
+
+  /* NO BT SUPPORT */
+  .no-bt {
+    background: rgba(255,107,53,0.1);
+    border: 1px solid var(--accent3);
+    border-radius: 8px;
+    padding: 20px 32px;
+    text-align: center;
+    max-width: 500px;
+  }
+  .no-bt h3 { color: var(--accent3); margin-bottom: 8px; }
+  .no-bt p { color: var(--dim); font-size: 14px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<!-- CONNECT SCREEN -->
+<div id="connect-screen">
+  <div class="connect-title">🌍 Klimaatmeter</div>
+  <div class="connect-subtitle">KLAS MONITORING SYSTEEM — BLUETOOTH</div>
+  <div class="bt-icon">📡</div>
+  <div id="bt-status">WACHTEN OP VERBINDING...</div>
+  <button class="connect-btn" id="connect-btn" onclick="connectBluetooth()">
+    Verbinden met Arduino
+  </button>
+  <div id="no-bt-warning"></div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+  <header>
+    <div class="header-title">🌍 Klimaatmeter Klas</div>
+    <div class="header-right">
+      <div class="status-dot"></div>
+      <div class="status-label" id="device-name">VERBONDEN</div>
+      <button class="disconnect-btn" onclick="disconnect()">Ontkoppelen</button>
+    </div>
+  </header>
+
+  <div class="cards">
+    <div class="card temp">
+      <div class="card-label">Temperatuur</div>
+      <div class="card-value" id="temp">--<span class="card-unit">°C</span></div>
+      <div class="card-status" id="temp-status"></div>
+    </div>
+    <div class="card hum">
+      <div class="card-label">Luchtvochtigheid</div>
+      <div class="card-value" id="hum">--<span class="card-unit">%</span></div>
+      <div class="card-status" id="hum-status"></div>
+    </div>
+    <div class="card co2">
+      <div class="card-label">CO₂</div>
+      <div class="card-value" id="co2">--<span class="card-unit">ppm</span></div>
+      <div class="card-status" id="co2-status"></div>
+    </div>
+    <div class="card tvoc">
+      <div class="card-label">TVOC</div>
+      <div class="card-value" id="tvoc">--<span class="card-unit">ppb</span></div>
+      <div class="card-status" id="tvoc-status"></div>
+    </div>
+  </div>
+
+  <div class="charts">
+    <div class="chart-box">
+      <div class="chart-title">Temperatuur (°C)</div>
+      <canvas id="tempChart"></canvas>
+    </div>
+    <div class="chart-box">
+      <div class="chart-title">Luchtvochtigheid (%)</div>
+      <canvas id="humChart"></canvas>
+    </div>
+    <div class="chart-box">
+      <div class="chart-title">CO₂ (ppm)</div>
+      <canvas id="co2Chart"></canvas>
+    </div>
+  </div>
+
+  <div class="log-box">
+    <div class="log-title">RAW BLUETOOTH DATA</div>
+    <div id="raw-log"></div>
+  </div>
+
+  <div class="melding">🎵 Klik 1× op het scherm om muziek te starten</div>
+</div>
+
+<!-- MUZIEK -->
+<audio id="bgm" src="muziek.mp3" loop></audio>
+
+<script>
+// ===== GLOBALS =====
+let btDevice = null;
+let btCharacteristic = null;
+let receiveBuffer = '';
+
+const labels = [], tempData = [], humData = [], co2Data = [];
+let tempChart, humChart, co2Chart;
+
+// ===== BLUETOOTH CHECK =====
+window.addEventListener('load', () => {
+  if (!navigator.bluetooth) {
+    document.getElementById('no-bt-warning').innerHTML = `
+      <div class="no-bt">
+        <h3>⚠️ Bluetooth niet ondersteund</h3>
+        <p>Web Bluetooth werkt alleen in <strong>Chrome</strong> of <strong>Edge</strong> op desktop/Android.<br>
+        Gebruik geen Firefox, Safari of iOS.</p>
+      </div>`;
+    document.getElementById('connect-btn').disabled = true;
+  }
+});
+
+// ===== MUZIEK =====
+document.body.addEventListener('click', () => {
+  const m = document.getElementById('bgm');
+  m.volume = 0.3;
+  m.play().catch(() => {});
+}, { once: true });
+
+// ===== CONNECT =====
+async function connectBluetooth() {
+  const btn = document.getElementById('connect-btn');
+  const status = document.getElementById('bt-status');
+
+  try {
+    btn.disabled = true;
+    status.textContent = 'ZOEKEN NAAR APPARATEN...';
+    status.className = '';
+
+    btDevice = await navigator.bluetooth.requestDevice({
+      acceptAllDevices: true,
+      optionalServices: [
+        '0000ffe0-0000-1000-8000-00805f9b34fb', // HM-10
+        '00001101-0000-1000-8000-00805f9b34fb'  // HC-05 SPP
+      ]
+    });
+
+    status.textContent = 'VERBINDEN MET ' + btDevice.name + '...';
+    btDevice.addEventListener('gattserverdisconnected', onDisconnected);
+
+    const server  = await btDevice.gatt.connect();
+    status.textContent = 'SERVICES ZOEKEN...';
+
+    // Probeer HM-10 service (meest voorkomend voor Web BT)
+    let service;
+    try {
+      service = await server.getPrimaryService('0000ffe0-0000-1000-8000-00805f9b34fb');
+      btCharacteristic = await service.getCharacteristic('0000ffe1-0000-1000-8000-00805f9b34fb');
+    } catch(e) {
+      // Fallback: probeer eerste beschikbare service
+      const services = await server.getPrimaryServices();
+      if (services.length === 0) throw new Error('Geen services gevonden');
+      service = services[0];
+      const chars = await service.getCharacteristics();
+      btCharacteristic = chars.find(c => c.properties.notify || c.properties.read) || chars[0];
+    }
+
+    await btCharacteristic.startNotifications();
+    btCharacteristic.addEventListener('characteristicvaluechanged', onDataReceived);
+
+    // DASHBOARD TONEN
+    status.textContent = 'VERBONDEN ✓';
+    status.className = 'ok';
+    document.getElementById('device-name').textContent = btDevice.name || 'ARDUINO';
+
+    setTimeout(() => {
+      document.getElementById('connect-screen').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'flex';
+      initCharts();
+    }, 800);
+
+  } catch(err) {
+    status.textContent = 'FOUT: ' + err.message;
+    status.className = 'err';
+    btn.disabled = false;
+    console.error(err);
+  }
+}
+
+// ===== DATA ONTVANGEN =====
+function onDataReceived(event) {
+  const decoder = new TextDecoder('utf-8');
+  const chunk = decoder.decode(event.target.value);
+  receiveBuffer += chunk;
+
+  // Verwerk volledige regels
+  const lines = receiveBuffer.split('\n');
+  receiveBuffer = lines.pop(); // laatste incomplete regel bewaren
+
+  lines.forEach(line => {
+    line = line.trim();
+    if (!line) return;
+    logRaw(line);
+    parseArduinoData(line);
+  });
+}
+
+// ===== PARSE DATA =====
+// Verwacht formaat: "T:22.5C RH:48.0% CO2:512ppm TVOC:15ppb"
+function parseArduinoData(line) {
+  const tMatch    = line.match(/T:([\d.]+)C/);
+  const rhMatch   = line.match(/RH:([\d.]+)%/);
+  const co2Match  = line.match(/CO2:(\d+)ppm/);
+  const tvocMatch = line.match(/TVOC:(\d+)ppb/);
+
+  if (!tMatch && !rhMatch && !co2Match) return; // geen sensordata
+
+  const tijd = new Date().toLocaleTimeString('nl', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+
+  if (tMatch) {
+    const v = parseFloat(tMatch[1]);
+    document.getElementById('temp').innerHTML = v.toFixed(1) + '<span class="card-unit">°C</span>';
+    const s = document.getElementById('temp-status');
+    if (v < 18) { s.style.color='#00d4ff'; s.textContent='▼ Koud'; }
+    else if (v > 26) { s.style.color='#ff6b35'; s.textContent='▲ Warm'; }
+    else { s.style.color='#00ff9f'; s.textContent='● Comfortabel'; }
+
+    tempData.push(v.toFixed(1));
+    if (tempData.length > 20) tempData.shift();
+  }
+
+  if (rhMatch) {
+    const v = parseFloat(rhMatch[1]);
+    document.getElementById('hum').innerHTML = v.toFixed(0) + '<span class="card-unit">%</span>';
+    const s = document.getElementById('hum-status');
+    if (v < 30) { s.style.color='#ff6b35'; s.textContent='▼ Droog'; }
+    else if (v > 70) { s.style.color='#00d4ff'; s.textContent='▲ Vochtig'; }
+    else { s.style.color='#00ff9f'; s.textContent='● Goed'; }
+
+    humData.push(v.toFixed(0));
+    if (humData.length > 20) humData.shift();
+  }
+
+  if (co2Match) {
+    const v = parseInt(co2Match[1]);
+    document.getElementById('co2').innerHTML = v + '<span class="card-unit">ppm</span>';
+    const s = document.getElementById('co2-status');
+    if (v < 1000) { s.style.color='#00ff9f'; s.textContent='● Goed'; }
+    else if (v < 2000) { s.style.color='#ffaa00'; s.textContent='▲ Matig'; }
+    else { s.style.color='#ff6b35'; s.textContent='⚠ Ventileer!'; }
+
+    co2Data.push(v);
+    if (co2Data.length > 20) co2Data.shift();
+  }
+
+  if (tvocMatch) {
+    const v = parseInt(tvocMatch[1]);
+    document.getElementById('tvoc').innerHTML = v + '<span class="card-unit">ppb</span>';
+    const s = document.getElementById('tvoc-status');
+    if (v < 220) { s.style.color='#00ff9f'; s.textContent='● Goed'; }
+    else if (v < 660) { s.style.color='#ffaa00'; s.textContent='▲ Matig'; }
+    else { s.style.color='#ff6b35'; s.textContent='⚠ Slecht'; }
+  }
+
+  // Labels bijwerken
+  labels.push(tijd);
+  if (labels.length > 20) labels.shift();
+
+  // Charts updaten
+  if (tempChart) { tempChart.data.labels = [...labels]; tempChart.data.datasets[0].data = [...tempData]; tempChart.update('none'); }
+  if (humChart)  { humChart.data.labels  = [...labels]; humChart.data.datasets[0].data  = [...humData];  humChart.update('none'); }
+  if (co2Chart)  { co2Chart.data.labels  = [...labels]; co2Chart.data.datasets[0].data  = [...co2Data];  co2Chart.update('none'); }
+}
+
+// ===== RAW LOG =====
+function logRaw(line) {
+  const log = document.getElementById('raw-log');
+  const div = document.createElement('div');
+  div.textContent = '> ' + line;
+  log.appendChild(div);
+  while (log.children.length > 5) log.removeChild(log.firstChild);
+  log.scrollTop = log.scrollHeight;
+}
+
+// ===== CHARTS INIT =====
+function initCharts() {
+  const opts = (kleur) => ({
+    type: 'line',
+    data: { labels: [], datasets: [{ data: [], borderColor: kleur, backgroundColor: kleur + '15', borderWidth: 2, tension: 0.4, pointRadius: 3, pointBackgroundColor: kleur, fill: true }] },
+    options: {
+      animation: false,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { color: '#4a6a8a', font: { family: 'Share Tech Mono', size: 10 }, maxTicksLimit: 5 }, grid: { color: '#1e3a5f' } },
+        y: { ticks: { color: '#4a6a8a', font: { family: 'Share Tech Mono', size: 10 } }, grid: { color: '#1e3a5f' } }
+      }
+    }
+  });
+
+  tempChart = new Chart(document.getElementById('tempChart'), opts('#ff6b35'));
+  humChart  = new Chart(document.getElementById('humChart'),  opts('#00d4ff'));
+  co2Chart  = new Chart(document.getElementById('co2Chart'),  opts('#00ff9f'));
+}
+
+// ===== DISCONNECT =====
+function onDisconnected() {
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('connect-screen').style.display = 'flex';
+  const status = document.getElementById('bt-status');
+  status.textContent = 'VERBINDING VERBROKEN';
+  status.className = 'err';
+  document.getElementById('connect-btn').disabled = false;
+}
+
+function disconnect() {
+  if (btDevice && btDevice.gatt.connected) btDevice.gatt.disconnect();
+  else onDisconnected();
+}
+</script>
+</body>
+</html>
