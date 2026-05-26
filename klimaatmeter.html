@@ -8,61 +8,22 @@
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Exo+2:wght@300;600;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0a0e14;
-    --panel: #0f1520;
-    --border: #1e3a5f;
-    --accent: #00d4ff;
-    --accent2: #00ff9f;
-    --accent3: #ff6b35;
-    --text: #c8d8e8;
-    --dim: #4a6a8a;
+    --bg: #0a0e14; --panel: #0f1520; --border: #1e3a5f;
+    --accent: #00d4ff; --accent2: #00ff9f; --accent3: #ff6b35; --text: #c8d8e8; --dim: #4a6a8a;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { height: 100%; }
-  body {
-    background: var(--bg); color: var(--text);
-    font-family: 'Exo 2', sans-serif;
-    height: 100vh; overflow: hidden;
-    display: flex; flex-direction: column;
-  }
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px);
-    pointer-events: none; z-index: 999;
-  }
+  body { background: var(--bg); color: var(--text); font-family: 'Exo 2', sans-serif; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+  body::before { content: ''; position: fixed; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px); pointer-events: none; z-index: 999; }
 
-  /* CONNECT SCREEN */
-  #connect-screen {
-    display: flex; flex-direction: column; align-items: center;
-    justify-content: center; height: 100vh; gap: 24px; padding: 40px;
-  }
-  .connect-title {
-    font-size: clamp(28px,5vw,52px); font-weight: 800; letter-spacing: 4px;
-    text-transform: uppercase;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center;
-  }
+  /* CONNECT */
+  #connect-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; gap: 24px; padding: 40px; }
+  .connect-title { font-size: clamp(28px,5vw,52px); font-weight: 800; letter-spacing: 4px; text-transform: uppercase; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center; }
   .connect-subtitle { font-family: 'Share Tech Mono', monospace; color: var(--dim); font-size: 14px; letter-spacing: 2px; text-align: center; }
-  .bt-icon {
-    width: 100px; height: 100px; border: 2px solid var(--border);
-    border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    font-size: 48px; animation: pulse-ring 2s ease-in-out infinite;
-  }
-  @keyframes pulse-ring {
-    0%,100% { box-shadow: 0 0 0 0 rgba(0,212,255,0.4), 0 0 0 0 rgba(0,212,255,0.2); }
-    50% { box-shadow: 0 0 0 20px rgba(0,212,255,0), 0 0 0 40px rgba(0,212,255,0); }
-  }
-  .connect-btn {
-    padding: 16px 48px; background: transparent; border: 2px solid var(--accent);
-    color: var(--accent); font-family: 'Exo 2', sans-serif; font-size: 16px;
-    font-weight: 600; letter-spacing: 3px; text-transform: uppercase; cursor: pointer;
-    border-radius: 4px; transition: all 0.3s; position: relative; overflow: hidden;
-  }
-  .connect-btn::before {
-    content: ''; position: absolute; inset: 0; background: var(--accent);
-    transform: translateX(-100%); transition: transform 0.3s; z-index: -1;
-  }
+  .bt-icon { width: 100px; height: 100px; border: 2px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 48px; animation: pulse-ring 2s ease-in-out infinite; }
+  @keyframes pulse-ring { 0%,100%{box-shadow:0 0 0 0 rgba(0,212,255,0.4),0 0 0 0 rgba(0,212,255,0.2);}50%{box-shadow:0 0 0 20px rgba(0,212,255,0),0 0 0 40px rgba(0,212,255,0);} }
+  .connect-btn { padding: 16px 48px; background: transparent; border: 2px solid var(--accent); color: var(--accent); font-family: 'Exo 2', sans-serif; font-size: 16px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; border-radius: 4px; transition: all 0.3s; position: relative; overflow: hidden; }
+  .connect-btn::before { content: ''; position: absolute; inset: 0; background: var(--accent); transform: translateX(-100%); transition: transform 0.3s; z-index: -1; }
   .connect-btn:hover { color: var(--bg); }
   .connect-btn:hover::before { transform: translateX(0); }
   .connect-btn:disabled { border-color: var(--dim); color: var(--dim); cursor: not-allowed; }
@@ -72,79 +33,46 @@
   #bt-status.err { color: var(--accent3); }
 
   /* DASHBOARD */
-  #dashboard {
-    display: none; flex-direction: column;
-    height: 100vh; padding: 10px; gap: 10px;
-  }
+  #dashboard { display: none; flex-direction: column; height: 100vh; padding: 8px; gap: 8px; }
 
-  header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 10px 20px; background: var(--panel);
-    border: 1px solid var(--border); border-radius: 8px;
-    flex-shrink: 0;
-  }
-  .header-title { font-size: clamp(13px,2vw,20px); font-weight: 800; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); }
+  header { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; background: var(--panel); border: 1px solid var(--border); border-radius: 8px; flex-shrink: 0; }
+  .header-title { font-size: clamp(12px,1.8vw,18px); font-weight: 800; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); }
   .header-right { display: flex; align-items: center; gap: 12px; }
   .status-dot { width: 8px; height: 8px; background: var(--accent2); border-radius: 50%; box-shadow: 0 0 10px var(--accent2); animation: blink 2s ease-in-out infinite; }
   @keyframes blink { 0%,100%{opacity:1;}50%{opacity:0.3;} }
   .status-label { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--accent2); letter-spacing: 1px; }
-  .disconnect-btn { padding: 6px 14px; background: transparent; border: 1px solid var(--accent3); color: var(--accent3); font-family: 'Exo 2', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; border-radius: 4px; transition: all 0.2s; }
+  .disconnect-btn { padding: 5px 12px; background: transparent; border: 1px solid var(--accent3); color: var(--accent3); font-family: 'Exo 2', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; border-radius: 4px; transition: all 0.2s; }
   .disconnect-btn:hover { background: var(--accent3); color: var(--bg); }
 
-  /* CARDS — compact */
-  .cards {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    flex-shrink: 0;
-  }
-  .card {
-    background: var(--panel); border: 1px solid var(--border);
-    border-radius: 8px; padding: 12px 16px;
-    position: relative; overflow: hidden;
-    display: flex; align-items: center; gap: 14px;
-  }
+  /* CARDS */
+  .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; flex-shrink: 0; }
+  .card { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; position: relative; overflow: hidden; display: flex; align-items: center; gap: 12px; }
   .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
   .card.temp::before { background: linear-gradient(90deg, transparent, #ff6b35, transparent); }
   .card.hum::before  { background: linear-gradient(90deg, transparent, #00d4ff, transparent); }
   .card.co2::before  { background: linear-gradient(90deg, transparent, #00ff9f, transparent); }
   .card.tvoc::before { background: linear-gradient(90deg, transparent, #bf5fff, transparent); }
-  .card-icon { font-size: 26px; flex-shrink: 0; }
+  .card-icon { font-size: 22px; flex-shrink: 0; }
   .card-info { display: flex; flex-direction: column; }
-  .card-label { font-family: 'Share Tech Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--dim); text-transform: uppercase; }
-  .card-value { font-family: 'Share Tech Mono', monospace; font-size: clamp(20px,2.5vw,30px); font-weight: 400; line-height: 1.1; }
+  .card-label { font-family: 'Share Tech Mono', monospace; font-size: 9px; letter-spacing: 2px; color: var(--dim); text-transform: uppercase; }
+  .card-value { font-family: 'Share Tech Mono', monospace; font-size: clamp(18px,2.2vw,26px); font-weight: 400; line-height: 1.1; }
   .card.temp .card-value { color: var(--accent3); text-shadow: 0 0 15px rgba(255,107,53,0.5); }
   .card.hum  .card-value { color: var(--accent);  text-shadow: 0 0 15px rgba(0,212,255,0.5); }
   .card.co2  .card-value { color: var(--accent2); text-shadow: 0 0 15px rgba(0,255,159,0.5); }
   .card.tvoc .card-value { color: #bf5fff; text-shadow: 0 0 15px rgba(191,95,255,0.5); }
-  .card-unit { font-size: 12px; opacity: 0.6; margin-left: 2px; }
-  .card-status { font-family: 'Share Tech Mono', monospace; font-size: 10px; letter-spacing: 1px; margin-top: 2px; }
+  .card-unit { font-size: 11px; opacity: 0.6; margin-left: 2px; }
+  .card-status { font-family: 'Share Tech Mono', monospace; font-size: 9px; letter-spacing: 1px; margin-top: 2px; }
 
-  /* CHARTS — nemen alle resterende ruimte */
-  .charts {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    flex: 1;
-    min-height: 0;
-  }
-  .chart-box {
-    background: var(--panel); border: 1px solid var(--border);
-    border-radius: 8px; padding: 12px;
-    display: flex; flex-direction: column;
-    min-height: 0;
-  }
-  .chart-title { font-family: 'Share Tech Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--dim); text-transform: uppercase; margin-bottom: 8px; flex-shrink: 0; }
+  /* CHARTS — 2x2 grid, vult alle ruimte */
+  .charts { display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); gap: 8px; flex: 1; min-height: 0; }
+  .chart-box { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; display: flex; flex-direction: column; min-height: 0; }
+  .chart-title { font-family: 'Share Tech Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--dim); text-transform: uppercase; margin-bottom: 6px; flex-shrink: 0; }
   .chart-box canvas { flex: 1; min-height: 0; width: 100% !important; }
 
-  /* LOG — compact onderaan */
-  .log-box {
-    background: var(--panel); border: 1px solid var(--border);
-    border-radius: 8px; padding: 8px 14px;
-    flex-shrink: 0;
-  }
-  .log-title { font-family: 'Share Tech Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--dim); text-transform: uppercase; margin-bottom: 4px; }
-  #raw-log { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--accent2); height: 44px; overflow-y: auto; line-height: 1.6; }
+  /* LOG */
+  .log-box { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 6px 14px; flex-shrink: 0; }
+  .log-title { font-family: 'Share Tech Mono', monospace; font-size: 9px; letter-spacing: 2px; color: var(--dim); text-transform: uppercase; margin-bottom: 2px; }
+  #raw-log { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: var(--accent2); height: 36px; overflow-y: auto; line-height: 1.6; }
   #raw-log div { opacity: 0; animation: fadein 0.4s forwards; }
   @keyframes fadein { to { opacity: 1; } }
 </style>
@@ -206,15 +134,19 @@
 
   <div class="charts">
     <div class="chart-box">
-      <div class="chart-title">Temperatuur (°C)</div>
+      <div class="chart-title">🌡️ Temperatuur (°C)</div>
       <canvas id="tempChart"></canvas>
     </div>
     <div class="chart-box">
-      <div class="chart-title">CO₂ (ppm)</div>
+      <div class="chart-title">💧 Luchtvochtigheid (%)</div>
+      <canvas id="humChart"></canvas>
+    </div>
+    <div class="chart-box">
+      <div class="chart-title">🌿 CO₂ (ppm)</div>
       <canvas id="co2Chart"></canvas>
     </div>
     <div class="chart-box">
-      <div class="chart-title">TVOC (ppb)</div>
+      <div class="chart-title">🧪 TVOC (ppb)</div>
       <canvas id="tvocChart"></canvas>
     </div>
   </div>
@@ -230,7 +162,7 @@
 <script>
 let btDevice = null, btCharacteristic = null, receiveBuffer = '';
 const labels = [], tempData = [], humData = [], co2Data = [], tvocData = [];
-let tempChart, co2Chart, tvocChart;
+let tempChart, humChart, co2Chart, tvocChart;
 
 document.body.addEventListener('click', () => {
   const m = document.getElementById('bgm');
@@ -300,6 +232,7 @@ function parseData(line) {
   if (!tM && !rhM && !co2M && !tvocM) return;
 
   const tijd = new Date().toLocaleTimeString('nl',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  labels.push(tijd); if(labels.length>30) labels.shift();
 
   if (tM) {
     const v = parseFloat(tM[1]);
@@ -338,11 +271,11 @@ function parseData(line) {
     tvocData.push(v); if(tvocData.length>30) tvocData.shift();
   }
 
-  labels.push(tijd); if(labels.length>30) labels.shift();
-
-  if(tempChart){ tempChart.data.labels=[...labels]; tempChart.data.datasets[0].data=[...tempData]; tempChart.update('none'); }
-  if(co2Chart) { co2Chart.data.labels=[...labels];  co2Chart.data.datasets[0].data=[...co2Data];  co2Chart.update('none'); }
-  if(tvocChart){ tvocChart.data.labels=[...labels]; tvocChart.data.datasets[0].data=[...tvocData]; tvocChart.update('none'); }
+  const l = [...labels];
+  if(tempChart){ tempChart.data.labels=l; tempChart.data.datasets[0].data=[...tempData]; tempChart.update('none'); }
+  if(humChart) { humChart.data.labels=l;  humChart.data.datasets[0].data=[...humData];  humChart.update('none'); }
+  if(co2Chart) { co2Chart.data.labels=l;  co2Chart.data.datasets[0].data=[...co2Data];  co2Chart.update('none'); }
+  if(tvocChart){ tvocChart.data.labels=l; tvocChart.data.datasets[0].data=[...tvocData]; tvocChart.update('none'); }
 }
 
 function logRaw(line) {
@@ -350,7 +283,7 @@ function logRaw(line) {
   const div = document.createElement('div');
   div.textContent = '> ' + line;
   log.appendChild(div);
-  while(log.children.length>3) log.removeChild(log.firstChild);
+  while(log.children.length>2) log.removeChild(log.firstChild);
   log.scrollTop = log.scrollHeight;
 }
 
@@ -359,9 +292,7 @@ function initCharts() {
     type: 'line',
     data: { labels:[], datasets:[{ data:[], borderColor:kleur, backgroundColor:kleur+'18', borderWidth:2, tension:0.4, pointRadius:2, pointBackgroundColor:kleur, fill:true }] },
     options: {
-      animation: false,
-      responsive: true,
-      maintainAspectRatio: false,
+      animation: false, responsive: true, maintainAspectRatio: false,
       plugins: { legend: { display: false } },
       scales: {
         x: { ticks:{ color:'#4a6a8a', font:{family:'Share Tech Mono',size:9}, maxTicksLimit:6 }, grid:{ color:'#1e3a5f' } },
@@ -370,6 +301,7 @@ function initCharts() {
     }
   });
   tempChart = new Chart(document.getElementById('tempChart'), opts('#ff6b35'));
+  humChart  = new Chart(document.getElementById('humChart'),  opts('#00d4ff'));
   co2Chart  = new Chart(document.getElementById('co2Chart'),  opts('#00ff9f'));
   tvocChart = new Chart(document.getElementById('tvocChart'), opts('#bf5fff'));
 }
