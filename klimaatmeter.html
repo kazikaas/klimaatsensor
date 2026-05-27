@@ -16,7 +16,6 @@
   body { background: var(--bg); color: var(--text); font-family: 'Exo 2', sans-serif; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
   body::before { content: ''; position: fixed; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px); pointer-events: none; z-index: 999; }
 
-  /* CONNECT */
   #connect-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; gap: 24px; padding: 40px; }
   .connect-title { font-size: clamp(28px,5vw,52px); font-weight: 800; letter-spacing: 4px; text-transform: uppercase; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center; }
   .connect-subtitle { font-family: 'Share Tech Mono', monospace; color: var(--dim); font-size: 14px; letter-spacing: 2px; text-align: center; }
@@ -32,29 +31,22 @@
   #bt-status.ok { color: var(--accent2); }
   #bt-status.err { color: var(--accent3); }
 
-  /* DASHBOARD */
   #dashboard { display: none; flex-direction: column; height: 100vh; padding: 8px; gap: 8px; }
-
-  /* HEADER */
   header { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; background: var(--panel); border: 1px solid var(--border); border-radius: 8px; flex-shrink: 0; }
   .header-title { font-size: clamp(12px,1.8vw,18px); font-weight: 800; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); }
   .header-right { display: flex; align-items: center; gap: 10px; }
   .status-dot { width: 8px; height: 8px; background: var(--accent2); border-radius: 50%; box-shadow: 0 0 10px var(--accent2); animation: blink 2s ease-in-out infinite; }
   @keyframes blink { 0%,100%{opacity:1;}50%{opacity:0.3;} }
   .status-label { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--accent2); letter-spacing: 1px; }
-  .header-btn { padding: 5px 12px; background: transparent; border: 1px solid var(--border); color: var(--dim); font-family: 'Exo 2', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; border-radius: 4px; transition: all 0.2s; }
-  .header-btn:hover { border-color: var(--accent); color: var(--accent); }
   .disconnect-btn { padding: 5px 12px; background: transparent; border: 1px solid var(--accent3); color: var(--accent3); font-family: 'Exo 2', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; border-radius: 4px; transition: all 0.2s; }
   .disconnect-btn:hover { background: var(--accent3); color: var(--bg); }
 
-  /* TABS */
   .tab-bar { display: flex; gap: 6px; flex-shrink: 0; }
   .tab-btn { padding: 6px 18px; background: transparent; border: 1px solid var(--border); color: var(--dim); font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; border-radius: 6px 6px 0 0; transition: all 0.2s; border-bottom: none; }
   .tab-btn.active { border-color: var(--accent); color: var(--accent); background: var(--panel); }
   .tab-content { display: none; flex: 1; min-height: 0; flex-direction: column; gap: 8px; }
   .tab-content.active { display: flex; }
 
-  /* CARDS */
   .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; flex-shrink: 0; }
   .card { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; position: relative; overflow: hidden; display: flex; align-items: center; gap: 12px; }
   .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
@@ -73,20 +65,17 @@
   .card-unit { font-size: 11px; opacity: 0.6; margin-left: 2px; }
   .card-status { font-family: 'Share Tech Mono', monospace; font-size: 9px; letter-spacing: 1px; margin-top: 2px; }
 
-  /* CHARTS */
   .charts { display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); gap: 8px; flex: 1; min-height: 0; }
   .chart-box { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; display: flex; flex-direction: column; min-height: 0; }
   .chart-title { font-family: 'Share Tech Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--dim); text-transform: uppercase; margin-bottom: 6px; flex-shrink: 0; }
   .chart-box canvas { flex: 1; min-height: 0; width: 100% !important; }
 
-  /* LOG */
   .log-box { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 6px 14px; flex-shrink: 0; }
   .log-title { font-family: 'Share Tech Mono', monospace; font-size: 9px; letter-spacing: 2px; color: var(--dim); text-transform: uppercase; margin-bottom: 2px; }
   #raw-log { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: var(--accent2); height: 36px; overflow-y: auto; line-height: 1.6; }
   #raw-log div { opacity: 0; animation: fadein 0.4s forwards; }
   @keyframes fadein { to { opacity: 1; } }
 
-  /* MUZIEK TAB */
   .muziek-panel { background: var(--panel); border: 1px solid var(--border); border-radius: 0 8px 8px 8px; flex: 1; padding: 24px; display: flex; flex-direction: column; gap: 20px; overflow-y: auto; }
   .muziek-title { font-family: 'Share Tech Mono', monospace; font-size: 12px; letter-spacing: 3px; color: var(--dim); text-transform: uppercase; margin-bottom: 8px; }
   .now-playing { background: #0a1525; border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; display: flex; align-items: center; gap: 16px; }
@@ -111,19 +100,20 @@
   .add-muziek { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: var(--dim); text-align: center; padding: 12px; border: 1px dashed var(--border); border-radius: 6px; cursor: pointer; transition: all 0.2s; }
   .add-muziek:hover { border-color: var(--accent); color: var(--accent); }
 
-  /* CREDITS TAB */
+  /* CREDITS */
   .credits-panel { background: var(--panel); border: 1px solid var(--border); border-radius: 0 8px 8px 8px; flex: 1; padding: 24px; display: flex; flex-direction: column; align-items: center; gap: 0; overflow-y: auto; }
   .credits-title { font-size: clamp(20px,3vw,36px); font-weight: 800; letter-spacing: 4px; text-transform: uppercase; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 6px; text-align: center; }
   .credits-sub { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--dim); letter-spacing: 3px; margin-bottom: 28px; }
-  .credits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; width: 100%; }
-  .credit-card { background: #0a1525; border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; display: flex; align-items: center; gap: 14px; transition: all 0.3s; position: relative; overflow: hidden; }
+  .credits-section-title { font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-spacing: 3px; color: var(--dim); text-transform: uppercase; margin: 18px 0 10px 0; width: 100%; padding-left: 4px; border-left: 2px solid var(--border); padding-left: 10px; }
+  .credits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; width: 100%; }
+  .credit-card { background: #0a1525; border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; display: flex; align-items: center; gap: 12px; transition: all 0.3s; position: relative; overflow: hidden; }
   .credit-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--c, var(--accent)), transparent); }
   .credit-card:hover { transform: translateY(-2px); border-color: var(--c, var(--accent)); box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
-  .credit-emoji { font-size: 28px; flex-shrink: 0; }
+  .credit-emoji { font-size: 24px; flex-shrink: 0; }
   .credit-info { display: flex; flex-direction: column; }
-  .credit-name { font-weight: 800; font-size: 15px; color: var(--text); letter-spacing: 1px; }
-  .credit-role { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: var(--dim); letter-spacing: 1px; margin-top: 3px; line-height: 1.4; }
-  .credit-role.special { color: var(--accent3); }
+  .credit-name { font-weight: 800; font-size: 13px; color: var(--text); letter-spacing: 1px; }
+  .credit-role { font-family: 'Share Tech Mono', monospace; font-size: 9px; color: var(--dim); letter-spacing: 1px; margin-top: 3px; line-height: 1.4; }
+  .credit-role.roast { color: #ff6b35; }
 </style>
 </head>
 <body>
@@ -147,46 +137,18 @@
   </header>
 
   <div class="tab-bar">
-    <button class="tab-btn active" onclick="switchTab('data')">📊 Data</button>
-    <button class="tab-btn" onclick="switchTab('muziek')">🎵 Muziek</button>
-    <button class="tab-btn" onclick="switchTab('credits')">⭐ Credits</button>
+    <button class="tab-btn active" onclick="switchTab('data', this)">📊 Data</button>
+    <button class="tab-btn" onclick="switchTab('muziek', this)">🎵 Muziek</button>
+    <button class="tab-btn" onclick="switchTab('credits', this)">⭐ Credits</button>
   </div>
 
   <!-- DATA TAB -->
   <div class="tab-content active" id="tab-data">
     <div class="cards">
-      <div class="card temp">
-        <div class="card-icon">🌡️</div>
-        <div class="card-info">
-          <div class="card-label">Temperatuur</div>
-          <div class="card-value" id="temp">--<span class="card-unit">°C</span></div>
-          <div class="card-status" id="temp-status"></div>
-        </div>
-      </div>
-      <div class="card hum">
-        <div class="card-icon">💧</div>
-        <div class="card-info">
-          <div class="card-label">Luchtvochtigheid</div>
-          <div class="card-value" id="hum">--<span class="card-unit">%</span></div>
-          <div class="card-status" id="hum-status"></div>
-        </div>
-      </div>
-      <div class="card co2">
-        <div class="card-icon">🌿</div>
-        <div class="card-info">
-          <div class="card-label">CO₂</div>
-          <div class="card-value" id="co2">--<span class="card-unit">ppm</span></div>
-          <div class="card-status" id="co2-status"></div>
-        </div>
-      </div>
-      <div class="card tvoc">
-        <div class="card-icon">🧪</div>
-        <div class="card-info">
-          <div class="card-label">TVOC</div>
-          <div class="card-value" id="tvoc">--<span class="card-unit">ppb</span></div>
-          <div class="card-status" id="tvoc-status"></div>
-        </div>
-      </div>
+      <div class="card temp"><div class="card-icon">🌡️</div><div class="card-info"><div class="card-label">Temperatuur</div><div class="card-value" id="temp">--<span class="card-unit">°C</span></div><div class="card-status" id="temp-status"></div></div></div>
+      <div class="card hum"><div class="card-icon">💧</div><div class="card-info"><div class="card-label">Luchtvochtigheid</div><div class="card-value" id="hum">--<span class="card-unit">%</span></div><div class="card-status" id="hum-status"></div></div></div>
+      <div class="card co2"><div class="card-icon">🌿</div><div class="card-info"><div class="card-label">CO₂</div><div class="card-value" id="co2">--<span class="card-unit">ppm</span></div><div class="card-status" id="co2-status"></div></div></div>
+      <div class="card tvoc"><div class="card-icon">🧪</div><div class="card-info"><div class="card-label">TVOC</div><div class="card-value" id="tvoc">--<span class="card-unit">ppb</span></div><div class="card-status" id="tvoc-status"></div></div></div>
     </div>
     <div class="charts">
       <div class="chart-box"><div class="chart-title">🌡️ Temperatuur (°C)</div><canvas id="tempChart"></canvas></div>
@@ -194,10 +156,7 @@
       <div class="chart-box"><div class="chart-title">🌿 CO₂ (ppm)</div><canvas id="co2Chart"></canvas></div>
       <div class="chart-box"><div class="chart-title">🧪 TVOC (ppb)</div><canvas id="tvocChart"></canvas></div>
     </div>
-    <div class="log-box">
-      <div class="log-title">RAW DATA</div>
-      <div id="raw-log"></div>
-    </div>
+    <div class="log-box"><div class="log-title">RAW DATA</div><div id="raw-log"></div></div>
   </div>
 
   <!-- MUZIEK TAB -->
@@ -207,15 +166,12 @@
         <div class="muziek-title">▶ Nu speelt</div>
         <div class="now-playing">
           <div class="np-icon" id="np-icon">💿</div>
-          <div class="np-info">
-            <div class="np-label">TRACK</div>
-            <div class="np-track" id="np-track">Geen muziek geselecteerd</div>
-          </div>
+          <div class="np-info"><div class="np-label">TRACK</div><div class="np-track" id="np-track">Geen muziek geselecteerd</div></div>
           <div class="controls">
-            <button class="ctrl-btn" onclick="prevTrack()" title="Vorige">⏮</button>
+            <button class="ctrl-btn" onclick="prevTrack()">⏮</button>
             <button class="ctrl-btn" id="play-btn" onclick="togglePlay()">▶</button>
-            <button class="ctrl-btn" onclick="nextTrack()" title="Volgende">⏭</button>
-            <button class="ctrl-btn" id="shuffle-btn" onclick="toggleShuffle()" title="Shuffle">🔀</button>
+            <button class="ctrl-btn" onclick="nextTrack()">⏭</button>
+            <button class="ctrl-btn" id="shuffle-btn" onclick="toggleShuffle()">🔀</button>
           </div>
         </div>
       </div>
@@ -231,9 +187,6 @@
           ＋ Muziekbestanden toevoegen
           <input type="file" accept="audio/*" multiple style="display:none" onchange="addFiles(this.files)">
         </label>
-        <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--dim);margin-top:8px;text-align:center;">
-          Zet .mp3 bestanden in dezelfde map als dit HTML bestand en voeg ze hier toe
-        </div>
       </div>
     </div>
   </div>
@@ -242,64 +195,76 @@
   <div class="tab-content" id="tab-credits">
     <div class="credits-panel">
       <div class="credits-title">✨ Special Thanks</div>
-      <div class="credits-sub">MENSEN DIE DIT MOGELIJK MAAKTEN</div>
+      <div class="credits-sub">IEDEREEN DIE BIJGEDRAGEN HEEFT (EN DIE NIET)</div>
+
+      <div class="credits-section-title">🏆 De echte helden</div>
       <div class="credits-grid">
-        <div class="credit-card" style="--c:#f0a500">
-          <div class="credit-emoji">🍹</div>
-          <div class="credit-info">
-            <div class="credit-name">Djay</div>
-            <div class="credit-role">Voor de drank</div>
-          </div>
-        </div>
-        <div class="credit-card" style="--c:#00d4ff">
-          <div class="credit-emoji">🤖</div>
-          <div class="credit-info">
-            <div class="credit-name">Claude</div>
-            <div class="credit-role">Voor de website</div>
-          </div>
-        </div>
-        <div class="credit-card" style="--c:#00ff9f">
-          <div class="credit-emoji">🧠</div>
-          <div class="credit-info">
-            <div class="credit-name">Joep</div>
-            <div class="credit-role">Voor extreme intelligentie</div>
-          </div>
-        </div>
-        <div class="credit-card" style="--c:#bf5fff">
-          <div class="credit-emoji">🎨</div>
-          <div class="credit-info">
-            <div class="credit-name">Gemini</div>
-            <div class="credit-role">Voor de prachtige illustraties</div>
-          </div>
-        </div>
-        <div class="credit-card" style="--c:#444">
-          <div class="credit-emoji">🦗</div>
-          <div class="credit-info">
-            <div class="credit-name">Grok</div>
-            <div class="credit-role special">Voor helemaal niks</div>
-          </div>
-        </div>
-        <div class="credit-card" style="--c:#ff6b35">
-          <div class="credit-emoji">🎭</div>
-          <div class="credit-info">
-            <div class="credit-name">Boudewijn</div>
-            <div class="credit-role">Voor design</div>
-          </div>
-        </div>
-        <div class="credit-card" style="--c:#ff4488">
-          <div class="credit-emoji">🗿</div>
-          <div class="credit-info">
-            <div class="credit-name">Tripo AI</div>
-            <div class="credit-role">Voor het model</div>
-          </div>
-        </div>
-        <div class="credit-card" style="--c:#ffdd00">
-          <div class="credit-emoji">💪</div>
-          <div class="credit-info">
-            <div class="credit-name">Jochem</div>
-            <div class="credit-role">Voor motivatie</div>
-          </div>
-        </div>
+        <div class="credit-card" style="--c:#f0a500"><div class="credit-emoji">🍹</div><div class="credit-info"><div class="credit-name">Djay</div><div class="credit-role">Voor de drank</div></div></div>
+        <div class="credit-card" style="--c:#00d4ff"><div class="credit-emoji">🤖</div><div class="credit-info"><div class="credit-name">Claude</div><div class="credit-role">Voor de website</div></div></div>
+        <div class="credit-card" style="--c:#00ff9f"><div class="credit-emoji">🧠</div><div class="credit-info"><div class="credit-name">Joep</div><div class="credit-role">Voor extreme intelligentie</div></div></div>
+        <div class="credit-card" style="--c:#bf5fff"><div class="credit-emoji">🎨</div><div class="credit-info"><div class="credit-name">Gemini</div><div class="credit-role">Voor de prachtige illustraties</div></div></div>
+        <div class="credit-card" style="--c:#ff6b35"><div class="credit-emoji">🎭</div><div class="credit-info"><div class="credit-name">Boudewijn</div><div class="credit-role">Voor design</div></div></div>
+        <div class="credit-card" style="--c:#ff4488"><div class="credit-emoji">🗿</div><div class="credit-info"><div class="credit-name">Tripo AI</div><div class="credit-role">Voor het model</div></div></div>
+        <div class="credit-card" style="--c:#ffdd00"><div class="credit-emoji">💪</div><div class="credit-info"><div class="credit-name">Jochem</div><div class="credit-role">Voor motivatie</div></div></div>
+        <div class="credit-card" style="--c:#444"><div class="credit-emoji">🦗</div><div class="credit-info"><div class="credit-name">Grok</div><div class="credit-role roast">Voor helemaal niks</div></div></div>
+      </div>
+
+      <div class="credits-section-title">💻 Software & Tools</div>
+      <div class="credits-grid">
+        <div class="credit-card" style="--c:#f5a623"><div class="credit-emoji">🔍</div><div class="credit-info"><div class="credit-name">Stack Overflow</div><div class="credit-role roast">Copy-paste zonder te begrijpen sinds 2008</div></div></div>
+        <div class="credit-card" style="--c:#4285f4"><div class="credit-emoji">🌐</div><div class="credit-info"><div class="credit-name">Google</div><div class="credit-role roast">Zonder jou typen we nog steeds "arduino dht11 werkt niet"</div></div></div>
+        <div class="credit-card" style="--c:#ff6b35"><div class="credit-emoji">🪟</div><div class="credit-info"><div class="credit-name">Microsoft</div><div class="credit-role roast">Deed een update op precies het slechtste moment</div></div></div>
+        <div class="credit-card" style="--c:#00d4ff"><div class="credit-emoji">🐙</div><div class="credit-info"><div class="credit-name">GitHub</div><div class="credit-role roast">Bewaart onze code alsof het iets waard is</div></div></div>
+        <div class="credit-card" style="--c:#f05032"><div class="credit-emoji">🔧</div><div class="credit-info"><div class="credit-name">Arduino IDE</div><div class="credit-role roast">Geeft foutmeldingen die niemand begrijpt</div></div></div>
+        <div class="credit-card" style="--c:#339af0"><div class="credit-emoji">🌀</div><div class="credit-info"><div class="credit-name">Chrome</div><div class="credit-role roast">Ondersteunt Web Bluetooth op precies 2 besturingssystemen</div></div></div>
+        <div class="credit-card" style="--c:#ff4444"><div class="credit-emoji">🦊</div><div class="credit-info"><div class="credit-name">Firefox</div><div class="credit-role roast">Heeft bewust besloten Web Bluetooth niet te steunen. Bedankt.</div></div></div>
+        <div class="credit-card" style="--c:#aaa"><div class="credit-emoji">🍎</div><div class="credit-info"><div class="credit-name">Safari / iOS</div><div class="credit-role roast">Bluetooth? In deze economie?</div></div></div>
+        <div class="credit-card" style="--c:#00ff9f"><div class="credit-emoji">📝</div><div class="credit-info"><div class="credit-name">VS Code</div><div class="credit-role roast">80 extensies geïnstalleerd, 3 gebruikt</div></div></div>
+        <div class="credit-card" style="--c:#f5a623"><div class="credit-emoji">📦</div><div class="credit-info"><div class="credit-name">npm</div><div class="credit-role roast">node_modules is groter dan het universum</div></div></div>
+        <div class="credit-card" style="--c:#bf5fff"><div class="credit-emoji">🐍</div><div class="credit-info"><div class="credit-name">Python</div><div class="credit-role roast">pip install --break-system-packages. Klinkt prima.</div></div></div>
+        <div class="credit-card" style="--c:#444"><div class="credit-emoji">🤷</div><div class="credit-info"><div class="credit-name">ChatGPT</div><div class="credit-role roast">Heeft ook geprobeerd de code te schrijven. Zie het resultaat.</div></div></div>
+      </div>
+
+      <div class="credits-section-title">🔧 Hardware</div>
+      <div class="credits-grid">
+        <div class="credit-card" style="--c:#f0a500"><div class="credit-emoji">🛒</div><div class="credit-info"><div class="credit-name">AliExpress</div><div class="credit-role roast">6 weken wachten voor een sensor van €0,43</div></div></div>
+        <div class="credit-card" style="--c:#00d4ff"><div class="credit-emoji">🌡️</div><div class="credit-info"><div class="credit-name">DHT11 uitvinder</div><div class="credit-role roast">Bedankt voor de -1 en -2 errors zonder verdere uitleg</div></div></div>
+        <div class="credit-card" style="--c:#ff6b35"><div class="credit-emoji">📡</div><div class="credit-info"><div class="credit-name">HM-10 module</div><div class="credit-role roast">Werkt op Linux na slechts 4 uur debugging</div></div></div>
+        <div class="credit-card" style="--c:#00ff9f"><div class="credit-emoji">🔌</div><div class="credit-info"><div class="credit-name">USB kabel</div><div class="credit-role roast">Werkte 1 van de 3 keer. Goede odds.</div></div></div>
+        <div class="credit-card" style="--c:#bf5fff"><div class="credit-emoji">🔋</div><div class="credit-info"><div class="credit-name">Laptopbatterij</div><div class="credit-role roast">Stierf 3 keer tijdens dit project. Ware held.</div></div></div>
+        <div class="credit-card" style="--c:#f5a623"><div class="credit-emoji">🍞</div><div class="credit-info"><div class="credit-name">Breadboard</div><div class="credit-role roast">Pins die er half inzitten tellen ook mee</div></div></div>
+        <div class="credit-card" style="--c:#ff4444"><div class="credit-emoji">🌈</div><div class="credit-info"><div class="credit-name">Jumper wires</div><div class="credit-role roast">Kleurcodering heeft niemand gevolgd</div></div></div>
+        <div class="credit-card" style="--c:#339af0"><div class="credit-emoji">🔩</div><div class="credit-info"><div class="credit-name">10kΩ weerstand</div><div class="credit-role roast">Klein maar had hem eerder nodig moeten hebben</div></div></div>
+        <div class="credit-card" style="--c:#aaa"><div class="credit-emoji">🧲</div><div class="credit-info"><div class="credit-name">SGP30 sensor</div><div class="credit-role roast">12 uur kalibreren voor "accurate" waardes. Spoiler: zijn het niet.</div></div></div>
+      </div>
+
+      <div class="credits-section-title">🌍 De omgeving</div>
+      <div class="credits-grid">
+        <div class="credit-card" style="--c:#f5a623"><div class="credit-emoji">☕</div><div class="credit-info"><div class="credit-name">Koffie</div><div class="credit-role roast">De enige reden waarom dit project bestaat</div></div></div>
+        <div class="credit-card" style="--c:#ff6b35"><div class="credit-emoji">📶</div><div class="credit-info"><div class="credit-name">WiFi van school</div><div class="credit-role roast">Werkte 0% van de tijd als het nodig was</div></div></div>
+        <div class="credit-card" style="--c:#00d4ff"><div class="credit-emoji">🪑</div><div class="credit-info"><div class="credit-name">De klastafel</div><div class="credit-role roast">Heeft meer verf dan hout maar deed het prima als werkblad</div></div></div>
+        <div class="credit-card" style="--c:#00ff9f"><div class="credit-emoji">🌬️</div><div class="credit-info"><div class="credit-name">Het raam</div><div class="credit-role roast">Opengezet na elke TVOC waarschuwing. Dat was vaak.</div></div></div>
+        <div class="credit-card" style="--c:#bf5fff"><div class="credit-emoji">🔦</div><div class="credit-info"><div class="credit-name">TL-verlichting</div><div class="credit-role roast">Flikkerend maar aanwezig. Net als sommige teamleden.</div></div></div>
+        <div class="credit-card" style="--c:#f0a500"><div class="credit-emoji">🎒</div><div class="credit-info"><div class="credit-name">De schooltas</div><div class="credit-role roast">Vervoerde alle componenten. Verloor er ook een paar.</div></div></div>
+        <div class="credit-card" style="--c:#ff4444"><div class="credit-emoji">📚</div><div class="credit-info"><div class="credit-name">De datasheet</div><div class="credit-role roast">Gelezen door niemand. Toch geciteerd door iedereen.</div></div></div>
+        <div class="credit-card" style="--c:#339af0"><div class="credit-emoji">🧹</div><div class="credit-info"><div class="credit-name">De schoonmaker</div><div class="credit-role roast">Veegde de losse weerstanden weg die we nooit terugzagen</div></div></div>
+      </div>
+
+      <div class="credits-section-title">🎓 Kennis & Inspiratie</div>
+      <div class="credits-grid">
+        <div class="credit-card" style="--c:#f5a623"><div class="credit-emoji">📺</div><div class="credit-info"><div class="credit-name">YouTube tutorials</div><div class="credit-role roast">Altijd voor een andere sensor dan die je hebt</div></div></div>
+        <div class="credit-card" style="--c:#ff6b35"><div class="credit-emoji">📖</div><div class="credit-info"><div class="credit-name">Arduino documentatie</div><div class="credit-role roast">Bestaat. Is ook wel eens gelezen.</div></div></div>
+        <div class="credit-card" style="--c:#00d4ff"><div class="credit-emoji">🤔</div><div class="credit-info"><div class="credit-name">Reddit</div><div class="credit-role roast">"Opgelost! Maar ga niet vertellen hoe." — elke thread</div></div></div>
+        <div class="credit-card" style="--c:#00ff9f"><div class="credit-emoji">🌟</div><div class="credit-info"><div class="credit-name">Random GitHub repo</div><div class="credit-role roast">Laatste commit: 2016. Toch werkte het.</div></div></div>
+        <div class="credit-card" style="--c:#bf5fff"><div class="credit-emoji">💬</div><div class="credit-info"><div class="credit-name">Arduino forum gebruiker</div><div class="credit-role roast">"Heb je al je board geselecteerd?" — 100% van de antwoorden</div></div></div>
+        <div class="credit-card" style="--c:#f0a500"><div class="credit-emoji">🗺️</div><div class="credit-info"><div class="credit-name">De I2C adres tabel</div><div class="credit-role roast">Gevonden om 2 uur 's nachts. Redde alles.</div></div></div>
+        <div class="credit-card" style="--c:#ff4444"><div class="credit-emoji">🐛</div><div class="credit-info"><div class="credit-name">De bug</div><div class="credit-role roast">Was een puntkomma. Altijd een puntkomma.</div></div></div>
+        <div class="credit-card" style="--c:#339af0"><div class="credit-emoji">💡</div><div class="credit-info"><div class="credit-name">Het inzicht om 23:47</div><div class="credit-role roast">Bleek al die tijd gewoon een verkeerde pin te zijn</div></div></div>
+        <div class="credit-card" style="--c:#aaa"><div class="credit-emoji">🙏</div><div class="credit-info"><div class="credit-name">Hoop</div><div class="credit-role roast">Technisch niet meetbaar maar cruciaal voor het project</div></div></div>
+      </div>
+
+      <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--dim);text-align:center;margin-top:24px;padding-top:16px;border-top:1px solid var(--border);width:100%;letter-spacing:1px;">
+        GEEN ARDUINO'S WERDEN BESCHADIGD TIJDENS DIT PROJECT &nbsp;·&nbsp; EEN DHT11 WEL
       </div>
     </div>
   </div>
@@ -308,148 +273,93 @@
 <audio id="bgm" loop></audio>
 
 <script>
-// ===== TABS =====
-function switchTab(name) {
-  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.remove('active'));
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
   document.getElementById('tab-'+name).classList.add('active');
-  event.target.classList.add('active');
+  btn.classList.add('active');
 }
 
-// ===== MUZIEK =====
 let playlist = [], currentTrack = 0, shuffleOn = false, isPlaying = false;
 const audio = document.getElementById('bgm');
-
-// Laad standaard muziek.mp3 als startpunt
 playlist = [{ name: 'muziek.mp3', src: 'muziek.mp3' }];
 renderPlaylist();
 
 function addFiles(files) {
-  Array.from(files).forEach(f => {
-    const url = URL.createObjectURL(f);
-    playlist.push({ name: f.name.replace(/\.[^.]+$/, ''), src: url });
-  });
+  Array.from(files).forEach(f => { playlist.push({ name: f.name.replace(/\.[^.]+$/, ''), src: URL.createObjectURL(f) }); });
   renderPlaylist();
 }
-
 function renderPlaylist() {
-  const el = document.getElementById('playlist');
-  el.innerHTML = '';
+  const el = document.getElementById('playlist'); el.innerHTML = '';
   playlist.forEach((t, i) => {
     const div = document.createElement('div');
     div.className = 'playlist-item' + (i === currentTrack ? ' active' : '');
     div.innerHTML = `<span class="playlist-num">${String(i+1).padStart(2,'0')}</span> ${t.name}`;
-    div.onclick = () => playTrack(i);
-    el.appendChild(div);
+    div.onclick = () => playTrack(i); el.appendChild(div);
   });
 }
-
 function playTrack(i) {
-  currentTrack = i;
-  audio.src = playlist[i].src;
+  currentTrack = i; audio.src = playlist[i].src;
   audio.volume = document.querySelector('input[type=range]').value / 100;
-  audio.play().catch(()=>{});
-  isPlaying = true;
+  audio.play().catch(()=>{}); isPlaying = true;
   document.getElementById('play-btn').textContent = '⏸';
   document.getElementById('np-track').textContent = playlist[i].name;
   document.getElementById('np-icon').classList.add('playing');
   renderPlaylist();
 }
-
 function togglePlay() {
   if (audio.paused) {
     if (!audio.src || audio.src === window.location.href) playTrack(currentTrack);
     else { audio.play(); isPlaying = true; document.getElementById('play-btn').textContent = '⏸'; document.getElementById('np-icon').classList.add('playing'); }
-  } else {
-    audio.pause(); isPlaying = false;
-    document.getElementById('play-btn').textContent = '▶';
-    document.getElementById('np-icon').classList.remove('playing');
-  }
+  } else { audio.pause(); isPlaying = false; document.getElementById('play-btn').textContent = '▶'; document.getElementById('np-icon').classList.remove('playing'); }
 }
+function nextTrack() { playTrack(shuffleOn ? Math.floor(Math.random()*playlist.length) : (currentTrack+1)%playlist.length); }
+function prevTrack() { playTrack((currentTrack-1+playlist.length)%playlist.length); }
+function toggleShuffle() { shuffleOn=!shuffleOn; document.getElementById('shuffle-btn').classList.toggle('active',shuffleOn); }
+function setVolume(v) { audio.volume=v/100; document.getElementById('vol-label').textContent=v+'%'; }
+audio.addEventListener('ended', ()=>nextTrack());
 
-function nextTrack() {
-  let next;
-  if (shuffleOn) { next = Math.floor(Math.random() * playlist.length); }
-  else { next = (currentTrack + 1) % playlist.length; }
-  playTrack(next);
-}
-
-function prevTrack() {
-  const prev = (currentTrack - 1 + playlist.length) % playlist.length;
-  playTrack(prev);
-}
-
-function toggleShuffle() {
-  shuffleOn = !shuffleOn;
-  document.getElementById('shuffle-btn').classList.toggle('active', shuffleOn);
-}
-
-function setVolume(v) {
-  audio.volume = v / 100;
-  document.getElementById('vol-label').textContent = v + '%';
-}
-
-audio.addEventListener('ended', () => nextTrack());
-
-// ===== BLUETOOTH =====
-let btDevice = null, btCharacteristic = null, receiveBuffer = '';
-const labels = [], tempData = [], humData = [], co2Data = [], tvocData = [];
-let tempChart, humChart, co2Chart, tvocChart;
+let btDevice=null, btCharacteristic=null, receiveBuffer='';
+const labels=[],tempData=[],humData=[],co2Data=[],tvocData=[];
+let tempChart,humChart,co2Chart,tvocChart;
 
 async function connectBluetooth() {
-  const btn = document.getElementById('connect-btn');
-  const status = document.getElementById('bt-status');
-  if (!navigator.bluetooth) { status.textContent = 'Web Bluetooth niet ondersteund. Gebruik Chrome op Windows/Android.'; status.className = 'err'; return; }
+  const btn=document.getElementById('connect-btn'), status=document.getElementById('bt-status');
+  if(!navigator.bluetooth){status.textContent='Web Bluetooth niet ondersteund.';status.className='err';return;}
   try {
-    btn.disabled = true;
-    status.textContent = 'ZOEKEN NAAR HM-10...'; status.className = '';
-    btDevice = await navigator.bluetooth.requestDevice({
-      filters: [{ name: 'HMSoft' }, { services: ['0000ffe0-0000-1000-8000-00805f9b34fb'] }],
-      optionalServices: ['0000ffe0-0000-1000-8000-00805f9b34fb']
-    });
-    btDevice.addEventListener('gattserverdisconnected', onDisconnected);
-    status.textContent = btDevice.name + ' GEVONDEN — VERBINDEN...';
+    btn.disabled=true; status.textContent='ZOEKEN NAAR HM-10...'; status.className='';
+    btDevice=await navigator.bluetooth.requestDevice({filters:[{name:'HMSoft'},{services:['0000ffe0-0000-1000-8000-00805f9b34fb']}],optionalServices:['0000ffe0-0000-1000-8000-00805f9b34fb']});
+    btDevice.addEventListener('gattserverdisconnected',onDisconnected);
+    status.textContent=btDevice.name+' GEVONDEN — VERBINDEN...';
     await gattVerbinden();
-  } catch(err) {
-    status.textContent = err.name === 'NotFoundError' ? 'Geen apparaat gekozen. Probeer opnieuw.' : 'FOUT: ' + err.message;
-    status.className = 'err'; btn.disabled = false;
-  }
+  } catch(err) { status.textContent=err.name==='NotFoundError'?'Geen apparaat gekozen.':'FOUT: '+err.message; status.className='err'; btn.disabled=false; }
 }
-
 async function gattVerbinden() {
-  const status = document.getElementById('bt-status');
-  await new Promise(r => setTimeout(r, 500));
-  const server = await btDevice.gatt.connect();
-  status.textContent = 'GATT VERBONDEN — SERVICES LADEN...';
-  await new Promise(r => setTimeout(r, 1000));
+  const status=document.getElementById('bt-status');
+  await new Promise(r=>setTimeout(r,500));
+  const server=await btDevice.gatt.connect();
+  status.textContent='GATT VERBONDEN — SERVICES LADEN...';
+  await new Promise(r=>setTimeout(r,1000));
   let service;
-  try { service = await server.getPrimaryService('0000ffe0-0000-1000-8000-00805f9b34fb'); }
-  catch(e) { const services = await server.getPrimaryServices(); service = services[0]; }
-  btCharacteristic = await service.getCharacteristic('0000ffe1-0000-1000-8000-00805f9b34fb');
+  try{service=await server.getPrimaryService('0000ffe0-0000-1000-8000-00805f9b34fb');}
+  catch(e){const s=await server.getPrimaryServices();service=s[0];}
+  btCharacteristic=await service.getCharacteristic('0000ffe1-0000-1000-8000-00805f9b34fb');
   await btCharacteristic.startNotifications();
-  btCharacteristic.addEventListener('characteristicvaluechanged', onDataReceived);
-  status.textContent = 'VERBONDEN ✓'; status.className = 'ok';
-  document.getElementById('device-name').textContent = btDevice.name || 'HM-10';
-  setTimeout(() => {
-    document.getElementById('connect-screen').style.display = 'none';
-    document.getElementById('dashboard').style.display = 'flex';
-    initCharts();
-  }, 600);
+  btCharacteristic.addEventListener('characteristicvaluechanged',onDataReceived);
+  status.textContent='VERBONDEN ✓'; status.className='ok';
+  document.getElementById('device-name').textContent=btDevice.name||'HM-10';
+  setTimeout(()=>{document.getElementById('connect-screen').style.display='none';document.getElementById('dashboard').style.display='flex';initCharts();},600);
 }
-
 function onDataReceived(event) {
-  receiveBuffer += new TextDecoder('utf-8').decode(event.target.value);
-  const lines = receiveBuffer.split('\n');
-  receiveBuffer = lines.pop();
-  lines.forEach(line => { line = line.trim(); if (line) { logRaw(line); parseData(line); } });
+  receiveBuffer+=new TextDecoder('utf-8').decode(event.target.value);
+  const lines=receiveBuffer.split('\n'); receiveBuffer=lines.pop();
+  lines.forEach(line=>{line=line.trim();if(line){logRaw(line);parseData(line);}});
 }
-
 function parseData(line) {
-  const tM=line.match(/T:([\d.]+)C/), rhM=line.match(/RH:([\d.]+)%/),
-        co2M=line.match(/CO2:(\d+)ppm/), tvocM=line.match(/TVOC:(\d+)ppb/);
-  if (!tM && !rhM && !co2M && !tvocM) return;
-  const tijd = new Date().toLocaleTimeString('nl',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
-  labels.push(tijd); if(labels.length>30) labels.shift();
+  const tM=line.match(/T:([\d.]+)C/),rhM=line.match(/RH:([\d.]+)%/),co2M=line.match(/CO2:(\d+)ppm/),tvocM=line.match(/TVOC:(\d+)ppb/);
+  if(!tM&&!rhM&&!co2M&&!tvocM)return;
+  const tijd=new Date().toLocaleTimeString('nl',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  labels.push(tijd);if(labels.length>30)labels.shift();
   if(tM){const v=parseFloat(tM[1]);document.getElementById('temp').innerHTML=v.toFixed(1)+'<span class="card-unit">°C</span>';const s=document.getElementById('temp-status');if(v<18){s.style.color='#00d4ff';s.textContent='▼ Koud';}else if(v>26){s.style.color='#ff6b35';s.textContent='▲ Warm';}else{s.style.color='#00ff9f';s.textContent='● Comfortabel';}tempData.push(v.toFixed(1));if(tempData.length>30)tempData.shift();}
   if(rhM){const v=parseFloat(rhM[1]);document.getElementById('hum').innerHTML=v.toFixed(0)+'<span class="card-unit">%</span>';const s=document.getElementById('hum-status');if(v<30){s.style.color='#ff6b35';s.textContent='▼ Droog';}else if(v>70){s.style.color='#00d4ff';s.textContent='▲ Vochtig';}else{s.style.color='#00ff9f';s.textContent='● Goed';}humData.push(v.toFixed(0));if(humData.length>30)humData.shift();}
   if(co2M){const v=parseInt(co2M[1]);document.getElementById('co2').innerHTML=v+'<span class="card-unit">ppm</span>';const s=document.getElementById('co2-status');if(v<1000){s.style.color='#00ff9f';s.textContent='● Goed';}else if(v<2000){s.style.color='#ffaa00';s.textContent='▲ Matig';}else{s.style.color='#ff6b35';s.textContent='⚠ Ventileer!';}co2Data.push(v);if(co2Data.length>30)co2Data.shift();}
@@ -460,37 +370,16 @@ function parseData(line) {
   if(co2Chart){co2Chart.data.labels=l;co2Chart.data.datasets[0].data=[...co2Data];co2Chart.update('none');}
   if(tvocChart){tvocChart.data.labels=l;tvocChart.data.datasets[0].data=[...tvocData];tvocChart.update('none');}
 }
-
-function logRaw(line) {
-  const log=document.getElementById('raw-log');
-  const div=document.createElement('div');
-  div.textContent='> '+line;
-  log.appendChild(div);
-  while(log.children.length>2)log.removeChild(log.firstChild);
-  log.scrollTop=log.scrollHeight;
-}
-
-function initCharts() {
+function logRaw(line){const log=document.getElementById('raw-log');const div=document.createElement('div');div.textContent='> '+line;log.appendChild(div);while(log.children.length>2)log.removeChild(log.firstChild);log.scrollTop=log.scrollHeight;}
+function initCharts(){
   const opts=(kleur)=>({type:'line',data:{labels:[],datasets:[{data:[],borderColor:kleur,backgroundColor:kleur+'18',borderWidth:2,tension:0.4,pointRadius:2,pointBackgroundColor:kleur,fill:true}]},options:{animation:false,responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#4a6a8a',font:{family:'Share Tech Mono',size:9},maxTicksLimit:6},grid:{color:'#1e3a5f'}},y:{ticks:{color:'#4a6a8a',font:{family:'Share Tech Mono',size:9}},grid:{color:'#1e3a5f'}}}}});
   tempChart=new Chart(document.getElementById('tempChart'),opts('#ff6b35'));
   humChart=new Chart(document.getElementById('humChart'),opts('#00d4ff'));
   co2Chart=new Chart(document.getElementById('co2Chart'),opts('#00ff9f'));
   tvocChart=new Chart(document.getElementById('tvocChart'),opts('#bf5fff'));
 }
-
-function onDisconnected() {
-  document.getElementById('dashboard').style.display='none';
-  document.getElementById('connect-screen').style.display='flex';
-  const status=document.getElementById('bt-status');
-  status.textContent='VERBINDING VERBROKEN — KLIK OM OPNIEUW TE VERBINDEN';
-  status.className='err';
-  document.getElementById('connect-btn').disabled=false;
-}
-
-function disconnect() {
-  if(btDevice&&btDevice.gatt.connected)btDevice.gatt.disconnect();
-  else onDisconnected();
-}
+function onDisconnected(){document.getElementById('dashboard').style.display='none';document.getElementById('connect-screen').style.display='flex';const s=document.getElementById('bt-status');s.textContent='VERBINDING VERBROKEN — KLIK OM OPNIEUW TE VERBINDEN';s.className='err';document.getElementById('connect-btn').disabled=false;}
+function disconnect(){if(btDevice&&btDevice.gatt.connected)btDevice.gatt.disconnect();else onDisconnected();}
 </script>
 </body>
 </html>
