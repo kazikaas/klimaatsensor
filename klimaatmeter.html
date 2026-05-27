@@ -35,14 +35,24 @@
   /* DASHBOARD */
   #dashboard { display: none; flex-direction: column; height: 100vh; padding: 8px; gap: 8px; }
 
+  /* HEADER */
   header { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; background: var(--panel); border: 1px solid var(--border); border-radius: 8px; flex-shrink: 0; }
   .header-title { font-size: clamp(12px,1.8vw,18px); font-weight: 800; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); }
-  .header-right { display: flex; align-items: center; gap: 12px; }
+  .header-right { display: flex; align-items: center; gap: 10px; }
   .status-dot { width: 8px; height: 8px; background: var(--accent2); border-radius: 50%; box-shadow: 0 0 10px var(--accent2); animation: blink 2s ease-in-out infinite; }
   @keyframes blink { 0%,100%{opacity:1;}50%{opacity:0.3;} }
   .status-label { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--accent2); letter-spacing: 1px; }
+  .header-btn { padding: 5px 12px; background: transparent; border: 1px solid var(--border); color: var(--dim); font-family: 'Exo 2', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; border-radius: 4px; transition: all 0.2s; }
+  .header-btn:hover { border-color: var(--accent); color: var(--accent); }
   .disconnect-btn { padding: 5px 12px; background: transparent; border: 1px solid var(--accent3); color: var(--accent3); font-family: 'Exo 2', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; border-radius: 4px; transition: all 0.2s; }
   .disconnect-btn:hover { background: var(--accent3); color: var(--bg); }
+
+  /* TABS */
+  .tab-bar { display: flex; gap: 6px; flex-shrink: 0; }
+  .tab-btn { padding: 6px 18px; background: transparent; border: 1px solid var(--border); color: var(--dim); font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; border-radius: 6px 6px 0 0; transition: all 0.2s; border-bottom: none; }
+  .tab-btn.active { border-color: var(--accent); color: var(--accent); background: var(--panel); }
+  .tab-content { display: none; flex: 1; min-height: 0; flex-direction: column; gap: 8px; }
+  .tab-content.active { display: flex; }
 
   /* CARDS */
   .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; flex-shrink: 0; }
@@ -63,7 +73,7 @@
   .card-unit { font-size: 11px; opacity: 0.6; margin-left: 2px; }
   .card-status { font-family: 'Share Tech Mono', monospace; font-size: 9px; letter-spacing: 1px; margin-top: 2px; }
 
-  /* CHARTS — 2x2 grid, vult alle ruimte */
+  /* CHARTS */
   .charts { display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); gap: 8px; flex: 1; min-height: 0; }
   .chart-box { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; display: flex; flex-direction: column; min-height: 0; }
   .chart-title { font-family: 'Share Tech Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--dim); text-transform: uppercase; margin-bottom: 6px; flex-shrink: 0; }
@@ -75,6 +85,45 @@
   #raw-log { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: var(--accent2); height: 36px; overflow-y: auto; line-height: 1.6; }
   #raw-log div { opacity: 0; animation: fadein 0.4s forwards; }
   @keyframes fadein { to { opacity: 1; } }
+
+  /* MUZIEK TAB */
+  .muziek-panel { background: var(--panel); border: 1px solid var(--border); border-radius: 0 8px 8px 8px; flex: 1; padding: 24px; display: flex; flex-direction: column; gap: 20px; overflow-y: auto; }
+  .muziek-title { font-family: 'Share Tech Mono', monospace; font-size: 12px; letter-spacing: 3px; color: var(--dim); text-transform: uppercase; margin-bottom: 8px; }
+  .now-playing { background: #0a1525; border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; display: flex; align-items: center; gap: 16px; }
+  .np-icon { font-size: 32px; animation: spin 4s linear infinite; animation-play-state: paused; }
+  .np-icon.playing { animation-play-state: running; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .np-info { flex: 1; }
+  .np-label { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: var(--dim); letter-spacing: 2px; }
+  .np-track { font-family: 'Share Tech Mono', monospace; font-size: 14px; color: var(--accent); margin-top: 4px; }
+  .controls { display: flex; gap: 10px; align-items: center; }
+  .ctrl-btn { padding: 8px 16px; background: transparent; border: 1px solid var(--border); color: var(--text); font-size: 16px; cursor: pointer; border-radius: 6px; transition: all 0.2s; }
+  .ctrl-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .ctrl-btn.active { border-color: var(--accent2); color: var(--accent2); background: rgba(0,255,159,0.1); }
+  .volume-row { display: flex; align-items: center; gap: 12px; }
+  .volume-row label { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: var(--dim); letter-spacing: 2px; white-space: nowrap; }
+  input[type=range] { flex: 1; accent-color: var(--accent); }
+  .playlist { display: flex; flex-direction: column; gap: 6px; }
+  .playlist-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #0a1525; border: 1px solid var(--border); border-radius: 6px; cursor: pointer; transition: all 0.2s; font-family: 'Share Tech Mono', monospace; font-size: 12px; color: var(--text); }
+  .playlist-item:hover { border-color: var(--accent); color: var(--accent); }
+  .playlist-item.active { border-color: var(--accent2); color: var(--accent2); background: rgba(0,255,159,0.05); }
+  .playlist-num { color: var(--dim); font-size: 10px; width: 20px; }
+  .add-muziek { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: var(--dim); text-align: center; padding: 12px; border: 1px dashed var(--border); border-radius: 6px; cursor: pointer; transition: all 0.2s; }
+  .add-muziek:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* CREDITS TAB */
+  .credits-panel { background: var(--panel); border: 1px solid var(--border); border-radius: 0 8px 8px 8px; flex: 1; padding: 24px; display: flex; flex-direction: column; align-items: center; gap: 0; overflow-y: auto; }
+  .credits-title { font-size: clamp(20px,3vw,36px); font-weight: 800; letter-spacing: 4px; text-transform: uppercase; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 6px; text-align: center; }
+  .credits-sub { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--dim); letter-spacing: 3px; margin-bottom: 28px; }
+  .credits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; width: 100%; }
+  .credit-card { background: #0a1525; border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; display: flex; align-items: center; gap: 14px; transition: all 0.3s; position: relative; overflow: hidden; }
+  .credit-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--c, var(--accent)), transparent); }
+  .credit-card:hover { transform: translateY(-2px); border-color: var(--c, var(--accent)); box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+  .credit-emoji { font-size: 28px; flex-shrink: 0; }
+  .credit-info { display: flex; flex-direction: column; }
+  .credit-name { font-weight: 800; font-size: 15px; color: var(--text); letter-spacing: 1px; }
+  .credit-role { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: var(--dim); letter-spacing: 1px; margin-top: 3px; line-height: 1.4; }
+  .credit-role.special { color: var(--accent3); }
 </style>
 </head>
 <body>
@@ -97,85 +146,260 @@
     </div>
   </header>
 
-  <div class="cards">
-    <div class="card temp">
-      <div class="card-icon">🌡️</div>
-      <div class="card-info">
-        <div class="card-label">Temperatuur</div>
-        <div class="card-value" id="temp">--<span class="card-unit">°C</span></div>
-        <div class="card-status" id="temp-status"></div>
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('data')">📊 Data</button>
+    <button class="tab-btn" onclick="switchTab('muziek')">🎵 Muziek</button>
+    <button class="tab-btn" onclick="switchTab('credits')">⭐ Credits</button>
+  </div>
+
+  <!-- DATA TAB -->
+  <div class="tab-content active" id="tab-data">
+    <div class="cards">
+      <div class="card temp">
+        <div class="card-icon">🌡️</div>
+        <div class="card-info">
+          <div class="card-label">Temperatuur</div>
+          <div class="card-value" id="temp">--<span class="card-unit">°C</span></div>
+          <div class="card-status" id="temp-status"></div>
+        </div>
+      </div>
+      <div class="card hum">
+        <div class="card-icon">💧</div>
+        <div class="card-info">
+          <div class="card-label">Luchtvochtigheid</div>
+          <div class="card-value" id="hum">--<span class="card-unit">%</span></div>
+          <div class="card-status" id="hum-status"></div>
+        </div>
+      </div>
+      <div class="card co2">
+        <div class="card-icon">🌿</div>
+        <div class="card-info">
+          <div class="card-label">CO₂</div>
+          <div class="card-value" id="co2">--<span class="card-unit">ppm</span></div>
+          <div class="card-status" id="co2-status"></div>
+        </div>
+      </div>
+      <div class="card tvoc">
+        <div class="card-icon">🧪</div>
+        <div class="card-info">
+          <div class="card-label">TVOC</div>
+          <div class="card-value" id="tvoc">--<span class="card-unit">ppb</span></div>
+          <div class="card-status" id="tvoc-status"></div>
+        </div>
       </div>
     </div>
-    <div class="card hum">
-      <div class="card-icon">💧</div>
-      <div class="card-info">
-        <div class="card-label">Luchtvochtigheid</div>
-        <div class="card-value" id="hum">--<span class="card-unit">%</span></div>
-        <div class="card-status" id="hum-status"></div>
-      </div>
+    <div class="charts">
+      <div class="chart-box"><div class="chart-title">🌡️ Temperatuur (°C)</div><canvas id="tempChart"></canvas></div>
+      <div class="chart-box"><div class="chart-title">💧 Luchtvochtigheid (%)</div><canvas id="humChart"></canvas></div>
+      <div class="chart-box"><div class="chart-title">🌿 CO₂ (ppm)</div><canvas id="co2Chart"></canvas></div>
+      <div class="chart-box"><div class="chart-title">🧪 TVOC (ppb)</div><canvas id="tvocChart"></canvas></div>
     </div>
-    <div class="card co2">
-      <div class="card-icon">🌿</div>
-      <div class="card-info">
-        <div class="card-label">CO₂</div>
-        <div class="card-value" id="co2">--<span class="card-unit">ppm</span></div>
-        <div class="card-status" id="co2-status"></div>
-      </div>
+    <div class="log-box">
+      <div class="log-title">RAW DATA</div>
+      <div id="raw-log"></div>
     </div>
-    <div class="card tvoc">
-      <div class="card-icon">🧪</div>
-      <div class="card-info">
-        <div class="card-label">TVOC</div>
-        <div class="card-value" id="tvoc">--<span class="card-unit">ppb</span></div>
-        <div class="card-status" id="tvoc-status"></div>
+  </div>
+
+  <!-- MUZIEK TAB -->
+  <div class="tab-content" id="tab-muziek">
+    <div class="muziek-panel">
+      <div>
+        <div class="muziek-title">▶ Nu speelt</div>
+        <div class="now-playing">
+          <div class="np-icon" id="np-icon">💿</div>
+          <div class="np-info">
+            <div class="np-label">TRACK</div>
+            <div class="np-track" id="np-track">Geen muziek geselecteerd</div>
+          </div>
+          <div class="controls">
+            <button class="ctrl-btn" onclick="prevTrack()" title="Vorige">⏮</button>
+            <button class="ctrl-btn" id="play-btn" onclick="togglePlay()">▶</button>
+            <button class="ctrl-btn" onclick="nextTrack()" title="Volgende">⏭</button>
+            <button class="ctrl-btn" id="shuffle-btn" onclick="toggleShuffle()" title="Shuffle">🔀</button>
+          </div>
+        </div>
+      </div>
+      <div class="volume-row">
+        <label>🔊 VOLUME</label>
+        <input type="range" min="0" max="100" value="30" oninput="setVolume(this.value)">
+        <span id="vol-label" style="font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--dim);width:35px">30%</span>
+      </div>
+      <div>
+        <div class="muziek-title">📂 Playlist</div>
+        <div class="playlist" id="playlist"></div>
+        <label class="add-muziek" style="margin-top:8px;display:block;">
+          ＋ Muziekbestanden toevoegen
+          <input type="file" accept="audio/*" multiple style="display:none" onchange="addFiles(this.files)">
+        </label>
+        <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--dim);margin-top:8px;text-align:center;">
+          Zet .mp3 bestanden in dezelfde map als dit HTML bestand en voeg ze hier toe
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="charts">
-    <div class="chart-box">
-      <div class="chart-title">🌡️ Temperatuur (°C)</div>
-      <canvas id="tempChart"></canvas>
+  <!-- CREDITS TAB -->
+  <div class="tab-content" id="tab-credits">
+    <div class="credits-panel">
+      <div class="credits-title">✨ Special Thanks</div>
+      <div class="credits-sub">MENSEN DIE DIT MOGELIJK MAAKTEN</div>
+      <div class="credits-grid">
+        <div class="credit-card" style="--c:#f0a500">
+          <div class="credit-emoji">🍹</div>
+          <div class="credit-info">
+            <div class="credit-name">Djay</div>
+            <div class="credit-role">Voor de drank</div>
+          </div>
+        </div>
+        <div class="credit-card" style="--c:#00d4ff">
+          <div class="credit-emoji">🤖</div>
+          <div class="credit-info">
+            <div class="credit-name">Claude</div>
+            <div class="credit-role">Voor de website</div>
+          </div>
+        </div>
+        <div class="credit-card" style="--c:#00ff9f">
+          <div class="credit-emoji">🧠</div>
+          <div class="credit-info">
+            <div class="credit-name">Joep</div>
+            <div class="credit-role">Voor extreme intelligentie</div>
+          </div>
+        </div>
+        <div class="credit-card" style="--c:#bf5fff">
+          <div class="credit-emoji">🎨</div>
+          <div class="credit-info">
+            <div class="credit-name">Gemini</div>
+            <div class="credit-role">Voor de prachtige illustraties</div>
+          </div>
+        </div>
+        <div class="credit-card" style="--c:#444">
+          <div class="credit-emoji">🦗</div>
+          <div class="credit-info">
+            <div class="credit-name">Grok</div>
+            <div class="credit-role special">Voor helemaal niks</div>
+          </div>
+        </div>
+        <div class="credit-card" style="--c:#ff6b35">
+          <div class="credit-emoji">🎭</div>
+          <div class="credit-info">
+            <div class="credit-name">Boudewijn</div>
+            <div class="credit-role">Voor design</div>
+          </div>
+        </div>
+        <div class="credit-card" style="--c:#ff4488">
+          <div class="credit-emoji">🗿</div>
+          <div class="credit-info">
+            <div class="credit-name">Tripo AI</div>
+            <div class="credit-role">Voor het model</div>
+          </div>
+        </div>
+        <div class="credit-card" style="--c:#ffdd00">
+          <div class="credit-emoji">💪</div>
+          <div class="credit-info">
+            <div class="credit-name">Jochem</div>
+            <div class="credit-role">Voor motivatie</div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="chart-box">
-      <div class="chart-title">💧 Luchtvochtigheid (%)</div>
-      <canvas id="humChart"></canvas>
-    </div>
-    <div class="chart-box">
-      <div class="chart-title">🌿 CO₂ (ppm)</div>
-      <canvas id="co2Chart"></canvas>
-    </div>
-    <div class="chart-box">
-      <div class="chart-title">🧪 TVOC (ppb)</div>
-      <canvas id="tvocChart"></canvas>
-    </div>
-  </div>
-
-  <div class="log-box">
-    <div class="log-title">RAW DATA</div>
-    <div id="raw-log"></div>
   </div>
 </div>
 
-<audio id="bgm" src="muziek.mp3" loop></audio>
+<audio id="bgm" loop></audio>
 
 <script>
+// ===== TABS =====
+function switchTab(name) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ===== MUZIEK =====
+let playlist = [], currentTrack = 0, shuffleOn = false, isPlaying = false;
+const audio = document.getElementById('bgm');
+
+// Laad standaard muziek.mp3 als startpunt
+playlist = [{ name: 'muziek.mp3', src: 'muziek.mp3' }];
+renderPlaylist();
+
+function addFiles(files) {
+  Array.from(files).forEach(f => {
+    const url = URL.createObjectURL(f);
+    playlist.push({ name: f.name.replace(/\.[^.]+$/, ''), src: url });
+  });
+  renderPlaylist();
+}
+
+function renderPlaylist() {
+  const el = document.getElementById('playlist');
+  el.innerHTML = '';
+  playlist.forEach((t, i) => {
+    const div = document.createElement('div');
+    div.className = 'playlist-item' + (i === currentTrack ? ' active' : '');
+    div.innerHTML = `<span class="playlist-num">${String(i+1).padStart(2,'0')}</span> ${t.name}`;
+    div.onclick = () => playTrack(i);
+    el.appendChild(div);
+  });
+}
+
+function playTrack(i) {
+  currentTrack = i;
+  audio.src = playlist[i].src;
+  audio.volume = document.querySelector('input[type=range]').value / 100;
+  audio.play().catch(()=>{});
+  isPlaying = true;
+  document.getElementById('play-btn').textContent = '⏸';
+  document.getElementById('np-track').textContent = playlist[i].name;
+  document.getElementById('np-icon').classList.add('playing');
+  renderPlaylist();
+}
+
+function togglePlay() {
+  if (audio.paused) {
+    if (!audio.src || audio.src === window.location.href) playTrack(currentTrack);
+    else { audio.play(); isPlaying = true; document.getElementById('play-btn').textContent = '⏸'; document.getElementById('np-icon').classList.add('playing'); }
+  } else {
+    audio.pause(); isPlaying = false;
+    document.getElementById('play-btn').textContent = '▶';
+    document.getElementById('np-icon').classList.remove('playing');
+  }
+}
+
+function nextTrack() {
+  let next;
+  if (shuffleOn) { next = Math.floor(Math.random() * playlist.length); }
+  else { next = (currentTrack + 1) % playlist.length; }
+  playTrack(next);
+}
+
+function prevTrack() {
+  const prev = (currentTrack - 1 + playlist.length) % playlist.length;
+  playTrack(prev);
+}
+
+function toggleShuffle() {
+  shuffleOn = !shuffleOn;
+  document.getElementById('shuffle-btn').classList.toggle('active', shuffleOn);
+}
+
+function setVolume(v) {
+  audio.volume = v / 100;
+  document.getElementById('vol-label').textContent = v + '%';
+}
+
+audio.addEventListener('ended', () => nextTrack());
+
+// ===== BLUETOOTH =====
 let btDevice = null, btCharacteristic = null, receiveBuffer = '';
 const labels = [], tempData = [], humData = [], co2Data = [], tvocData = [];
 let tempChart, humChart, co2Chart, tvocChart;
 
-document.body.addEventListener('click', () => {
-  const m = document.getElementById('bgm');
-  m.volume = 0.3; m.play().catch(() => {});
-}, { once: true });
-
 async function connectBluetooth() {
   const btn = document.getElementById('connect-btn');
   const status = document.getElementById('bt-status');
-  if (!navigator.bluetooth) {
-    status.textContent = 'Web Bluetooth niet ondersteund. Gebruik Chrome op Windows/Android.';
-    status.className = 'err'; return;
-  }
+  if (!navigator.bluetooth) { status.textContent = 'Web Bluetooth niet ondersteund. Gebruik Chrome op Windows/Android.'; status.className = 'err'; return; }
   try {
     btn.disabled = true;
     status.textContent = 'ZOEKEN NAAR HM-10...'; status.className = '';
@@ -199,12 +423,8 @@ async function gattVerbinden() {
   status.textContent = 'GATT VERBONDEN — SERVICES LADEN...';
   await new Promise(r => setTimeout(r, 1000));
   let service;
-  try {
-    service = await server.getPrimaryService('0000ffe0-0000-1000-8000-00805f9b34fb');
-  } catch(e) {
-    const services = await server.getPrimaryServices();
-    service = services[0];
-  }
+  try { service = await server.getPrimaryService('0000ffe0-0000-1000-8000-00805f9b34fb'); }
+  catch(e) { const services = await server.getPrimaryServices(); service = services[0]; }
   btCharacteristic = await service.getCharacteristic('0000ffe1-0000-1000-8000-00805f9b34fb');
   await btCharacteristic.startNotifications();
   btCharacteristic.addEventListener('characteristicvaluechanged', onDataReceived);
@@ -225,98 +445,50 @@ function onDataReceived(event) {
 }
 
 function parseData(line) {
-  const tM    = line.match(/T:([\d.]+)C/);
-  const rhM   = line.match(/RH:([\d.]+)%/);
-  const co2M  = line.match(/CO2:(\d+)ppm/);
-  const tvocM = line.match(/TVOC:(\d+)ppb/);
+  const tM=line.match(/T:([\d.]+)C/), rhM=line.match(/RH:([\d.]+)%/),
+        co2M=line.match(/CO2:(\d+)ppm/), tvocM=line.match(/TVOC:(\d+)ppb/);
   if (!tM && !rhM && !co2M && !tvocM) return;
-
   const tijd = new Date().toLocaleTimeString('nl',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
   labels.push(tijd); if(labels.length>30) labels.shift();
-
-  if (tM) {
-    const v = parseFloat(tM[1]);
-    document.getElementById('temp').innerHTML = v.toFixed(1)+'<span class="card-unit">°C</span>';
-    const s = document.getElementById('temp-status');
-    if(v<18){s.style.color='#00d4ff';s.textContent='▼ Koud';}
-    else if(v>26){s.style.color='#ff6b35';s.textContent='▲ Warm';}
-    else{s.style.color='#00ff9f';s.textContent='● Comfortabel';}
-    tempData.push(v.toFixed(1)); if(tempData.length>30) tempData.shift();
-  }
-  if (rhM) {
-    const v = parseFloat(rhM[1]);
-    document.getElementById('hum').innerHTML = v.toFixed(0)+'<span class="card-unit">%</span>';
-    const s = document.getElementById('hum-status');
-    if(v<30){s.style.color='#ff6b35';s.textContent='▼ Droog';}
-    else if(v>70){s.style.color='#00d4ff';s.textContent='▲ Vochtig';}
-    else{s.style.color='#00ff9f';s.textContent='● Goed';}
-    humData.push(v.toFixed(0)); if(humData.length>30) humData.shift();
-  }
-  if (co2M) {
-    const v = parseInt(co2M[1]);
-    document.getElementById('co2').innerHTML = v+'<span class="card-unit">ppm</span>';
-    const s = document.getElementById('co2-status');
-    if(v<1000){s.style.color='#00ff9f';s.textContent='● Goed';}
-    else if(v<2000){s.style.color='#ffaa00';s.textContent='▲ Matig';}
-    else{s.style.color='#ff6b35';s.textContent='⚠ Ventileer!';}
-    co2Data.push(v); if(co2Data.length>30) co2Data.shift();
-  }
-  if (tvocM) {
-    const v = parseInt(tvocM[1]);
-    document.getElementById('tvoc').innerHTML = v+'<span class="card-unit">ppb</span>';
-    const s = document.getElementById('tvoc-status');
-    if(v<220){s.style.color='#00ff9f';s.textContent='● Goed';}
-    else if(v<660){s.style.color='#ffaa00';s.textContent='▲ Matig';}
-    else{s.style.color='#ff6b35';s.textContent='⚠ Slecht';}
-    tvocData.push(v); if(tvocData.length>30) tvocData.shift();
-  }
-
-  const l = [...labels];
-  if(tempChart){ tempChart.data.labels=l; tempChart.data.datasets[0].data=[...tempData]; tempChart.update('none'); }
-  if(humChart) { humChart.data.labels=l;  humChart.data.datasets[0].data=[...humData];  humChart.update('none'); }
-  if(co2Chart) { co2Chart.data.labels=l;  co2Chart.data.datasets[0].data=[...co2Data];  co2Chart.update('none'); }
-  if(tvocChart){ tvocChart.data.labels=l; tvocChart.data.datasets[0].data=[...tvocData]; tvocChart.update('none'); }
+  if(tM){const v=parseFloat(tM[1]);document.getElementById('temp').innerHTML=v.toFixed(1)+'<span class="card-unit">°C</span>';const s=document.getElementById('temp-status');if(v<18){s.style.color='#00d4ff';s.textContent='▼ Koud';}else if(v>26){s.style.color='#ff6b35';s.textContent='▲ Warm';}else{s.style.color='#00ff9f';s.textContent='● Comfortabel';}tempData.push(v.toFixed(1));if(tempData.length>30)tempData.shift();}
+  if(rhM){const v=parseFloat(rhM[1]);document.getElementById('hum').innerHTML=v.toFixed(0)+'<span class="card-unit">%</span>';const s=document.getElementById('hum-status');if(v<30){s.style.color='#ff6b35';s.textContent='▼ Droog';}else if(v>70){s.style.color='#00d4ff';s.textContent='▲ Vochtig';}else{s.style.color='#00ff9f';s.textContent='● Goed';}humData.push(v.toFixed(0));if(humData.length>30)humData.shift();}
+  if(co2M){const v=parseInt(co2M[1]);document.getElementById('co2').innerHTML=v+'<span class="card-unit">ppm</span>';const s=document.getElementById('co2-status');if(v<1000){s.style.color='#00ff9f';s.textContent='● Goed';}else if(v<2000){s.style.color='#ffaa00';s.textContent='▲ Matig';}else{s.style.color='#ff6b35';s.textContent='⚠ Ventileer!';}co2Data.push(v);if(co2Data.length>30)co2Data.shift();}
+  if(tvocM){const v=parseInt(tvocM[1]);document.getElementById('tvoc').innerHTML=v+'<span class="card-unit">ppb</span>';const s=document.getElementById('tvoc-status');if(v<220){s.style.color='#00ff9f';s.textContent='● Goed';}else if(v<660){s.style.color='#ffaa00';s.textContent='▲ Matig';}else{s.style.color='#ff6b35';s.textContent='⚠ Slecht';}tvocData.push(v);if(tvocData.length>30)tvocData.shift();}
+  const l=[...labels];
+  if(tempChart){tempChart.data.labels=l;tempChart.data.datasets[0].data=[...tempData];tempChart.update('none');}
+  if(humChart){humChart.data.labels=l;humChart.data.datasets[0].data=[...humData];humChart.update('none');}
+  if(co2Chart){co2Chart.data.labels=l;co2Chart.data.datasets[0].data=[...co2Data];co2Chart.update('none');}
+  if(tvocChart){tvocChart.data.labels=l;tvocChart.data.datasets[0].data=[...tvocData];tvocChart.update('none');}
 }
 
 function logRaw(line) {
-  const log = document.getElementById('raw-log');
-  const div = document.createElement('div');
-  div.textContent = '> ' + line;
+  const log=document.getElementById('raw-log');
+  const div=document.createElement('div');
+  div.textContent='> '+line;
   log.appendChild(div);
-  while(log.children.length>2) log.removeChild(log.firstChild);
-  log.scrollTop = log.scrollHeight;
+  while(log.children.length>2)log.removeChild(log.firstChild);
+  log.scrollTop=log.scrollHeight;
 }
 
 function initCharts() {
-  const opts = (kleur) => ({
-    type: 'line',
-    data: { labels:[], datasets:[{ data:[], borderColor:kleur, backgroundColor:kleur+'18', borderWidth:2, tension:0.4, pointRadius:2, pointBackgroundColor:kleur, fill:true }] },
-    options: {
-      animation: false, responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: {
-        x: { ticks:{ color:'#4a6a8a', font:{family:'Share Tech Mono',size:9}, maxTicksLimit:6 }, grid:{ color:'#1e3a5f' } },
-        y: { ticks:{ color:'#4a6a8a', font:{family:'Share Tech Mono',size:9} }, grid:{ color:'#1e3a5f' } }
-      }
-    }
-  });
-  tempChart = new Chart(document.getElementById('tempChart'), opts('#ff6b35'));
-  humChart  = new Chart(document.getElementById('humChart'),  opts('#00d4ff'));
-  co2Chart  = new Chart(document.getElementById('co2Chart'),  opts('#00ff9f'));
-  tvocChart = new Chart(document.getElementById('tvocChart'), opts('#bf5fff'));
+  const opts=(kleur)=>({type:'line',data:{labels:[],datasets:[{data:[],borderColor:kleur,backgroundColor:kleur+'18',borderWidth:2,tension:0.4,pointRadius:2,pointBackgroundColor:kleur,fill:true}]},options:{animation:false,responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#4a6a8a',font:{family:'Share Tech Mono',size:9},maxTicksLimit:6},grid:{color:'#1e3a5f'}},y:{ticks:{color:'#4a6a8a',font:{family:'Share Tech Mono',size:9}},grid:{color:'#1e3a5f'}}}}});
+  tempChart=new Chart(document.getElementById('tempChart'),opts('#ff6b35'));
+  humChart=new Chart(document.getElementById('humChart'),opts('#00d4ff'));
+  co2Chart=new Chart(document.getElementById('co2Chart'),opts('#00ff9f'));
+  tvocChart=new Chart(document.getElementById('tvocChart'),opts('#bf5fff'));
 }
 
 function onDisconnected() {
-  document.getElementById('dashboard').style.display = 'none';
-  document.getElementById('connect-screen').style.display = 'flex';
-  const status = document.getElementById('bt-status');
-  status.textContent = 'VERBINDING VERBROKEN — KLIK OM OPNIEUW TE VERBINDEN';
-  status.className = 'err';
-  document.getElementById('connect-btn').disabled = false;
+  document.getElementById('dashboard').style.display='none';
+  document.getElementById('connect-screen').style.display='flex';
+  const status=document.getElementById('bt-status');
+  status.textContent='VERBINDING VERBROKEN — KLIK OM OPNIEUW TE VERBINDEN';
+  status.className='err';
+  document.getElementById('connect-btn').disabled=false;
 }
 
 function disconnect() {
-  if(btDevice && btDevice.gatt.connected) btDevice.gatt.disconnect();
+  if(btDevice&&btDevice.gatt.connected)btDevice.gatt.disconnect();
   else onDisconnected();
 }
 </script>
